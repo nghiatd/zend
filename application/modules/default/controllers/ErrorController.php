@@ -1,5 +1,5 @@
 <?php
-class Zend_ErrorController extends Zend_Controller_Front{
+class ErrorController extends Zend_Controller_Action{
     public function  errorAction(){
         die('fff');
     }

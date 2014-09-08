@@ -10,7 +10,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         $db = Zend_Db::factory ( $dbOption ['adapter'], $dbOption ['params'] );
 
-        try {$db->setFetchMode ( Zend_Db::FETCH_ASSOC );
+        try {$db->setFetchMode ( Zend_Db::FETCH_OBJ );
         }catch (Exception $e){
             echo $e->getMessage();
         }

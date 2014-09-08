@@ -1,2 +1,12 @@
-adminniasfisadf
-true admin
+<html>
+<head>
+    <title>Zend master</title>
+    <base href="http://localhost<?php echo $this->baseUrl(); ?>/">
+    <?php echo $this->headLink(); ?>
+
+</head>
+<body>
+    <?php echo $this->layout()->content; ?>
+    <?php echo $this->headScript();?>
+</body>
+</html>

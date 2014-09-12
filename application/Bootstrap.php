@@ -60,30 +60,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * Initialize Doctrine
      * @return Doctrine_Manager
      */
+    /**
+     * Initialize Doctrine
+     * @return Doctrine_Manager
+     */
     public function _initDoctrine() {
+        require_once('library/vendor/autoload.php');
         // include and register Doctrine's class loader
-//        library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php
         require_once('library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
-//        require_once('Doctrine/Common/ClassLoader.php');
-//        $classLoader = new \Doctrine\Common\ClassLoader(
-//            'Doctrine',
-//            APPLICATION_PATH . '/../library/'
-//        );
-//        $a = new \Doctrine\Common\ClassLoader();
-        $classLoader = new \Doctrine\Common\ClassLoader('Doctrine\Common\ClassLoader' ,'library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
+        $classLoader = new \Doctrine\Common\ClassLoader(
+            'Doctrine',
+            APPLICATION_PATH . '/../library/'
+        );
         $classLoader->register();
 
         // create the Doctrine configuration
-//        $config = new \Doctrine\ORM\Configuration();
-        $config = new \Doctrine\Common\ClassLoader('Doctrine\ORM', 'Doctrine\ORM');
-        $config->setNamespaceSeparator('\\');
-        $class = $config->loadClass('Configuration');
-        print_r($class);die;
-//        print_r(get_class($config));die;
+        $config = new \Doctrine\ORM\Configuration();
         // setting the cache ( to ArrayCache. Take a look at
         // the Doctrine manual for different options ! )
-//        $cache = new \Doctrine\Common\Cache\ArrayCache;
-        $cache = new \Doctrine\Common\ClassLoader('Doctrine\Common\Cache\ArrayCache', 'library/vendor/doctrine/cache/lib/Doctrine/Common/Cache/ArrayCache.php');
+        $cache = new \Doctrine\Common\Cache\ArrayCache;
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
@@ -116,6 +111,5 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $registry->entitymanager = $entityManager;
 
         return $entityManager;
-
     }
 }

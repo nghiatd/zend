@@ -173,7 +173,6 @@ class ClassLoader
      */
     public function loadClass($className)
     {
-        var_dump(strpos($className, $this->namespace.$this->namespaceSeparator));die;
         if ($this->namespace !== null && strpos($className, $this->namespace.$this->namespaceSeparator) !== 0) {
             return false;
         }

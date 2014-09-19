@@ -24,3 +24,14 @@ $application = new Zend_Application(
 );
 $application->bootstrap()
             ->run();
+//
+////-------Doctrine------//
+//require_once('../library/vendor/autoload.php');
+//// include and register Doctrine's class loader
+//require_once('../library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
+//
+//
+//require_once '../library/vendor/symfony/console/Symfony/Component/Console/Helper/HelperSet.php';
+//require_once '../library/vendor/symfony/console/Symfony/Component/Console/Application.php';
+//
+//include('schema_tool.php');

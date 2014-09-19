@@ -24,15 +24,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 //        return $db;
 //    }
 
-//    protected function setConstants($constants)
-//    {
-//        foreach($constants as $name => $value)
-//        {
-//            if(!defined($name))
-//                define($name, $value);
-//        }
-//
-//    }
+    protected function setConstants($constants)
+    {
+        foreach($constants as $name => $value)
+        {
+            if(!defined($name))
+                define($name, $value);
+        }
+
+    }
 
     /**
      * generate registry
@@ -65,9 +65,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * @return Doctrine_Manager
      */
     public function _initDoctrine() {
-        require_once('library/vendor/autoload.php');
+        require_once('../library/vendor/autoload.php');
         // include and register Doctrine's class loader
-        require_once('library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
+        require_once('../library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
+
+        $entitiesPath = '/var/www/html/zend.com/application/domain/Entities';
+        $proxiesPath = '/var/www/html/zend.com/application/domain/Proxies';
         $classLoader = new \Doctrine\Common\ClassLoader(
             'Doctrine',
             APPLICATION_PATH . '/../library/'
@@ -82,17 +85,26 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
-        // choosing the driver for our database schema
-        // we'll use annotations
-        $driver = $config->newDefaultAnnotationDriver(
-            APPLICATION_PATH . '/models'
-        );
-        $config->setMetadataDriverImpl($driver);
+        //old//
+//
+//        // choosing the driver for our database schema
+//        // we'll use annotations
+//        $driver = $config->newDefaultAnnotationDriver(
+//            APPLICATION_PATH . '/models'
+//        );
+//        $config->setMetadataDriverImpl($driver);
+//
+//        // set the proxy dir and set some options
+//        $config->setProxyDir(APPLICATION_PATH . '/models/Proxies');
+//        $config->setAutoGenerateProxyClasses(true);
+//        $config->setProxyNamespace('App\Proxies');
+    //old//
+        $driverImpl = $config->newDefaultAnnotationDriver($entitiesPath);
 
-        // set the proxy dir and set some options
-        $config->setProxyDir(APPLICATION_PATH . '/models/Proxies');
-        $config->setAutoGenerateProxyClasses(true);
-        $config->setProxyNamespace('App\Proxies');
+        $config->setMetadataDriverImpl($driverImpl);
+        $config->setQueryCacheImpl($cache);
+        $config->setProxyDir($proxiesPath);
+        $config->setProxyNamespace('domain\Proxies');
 
         // now create the entity manager and use the connection
         // settings we defined in our application.ini
@@ -104,6 +116,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'dbname'    => $connectionSettings['conn']['dbname'],
             'host'      => $connectionSettings['conn']['host']
         );
+//print_r($config);die;
         $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
 
         // push the entity manager into our registry for later use

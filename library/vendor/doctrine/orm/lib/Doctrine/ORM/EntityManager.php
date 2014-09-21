@@ -292,7 +292,6 @@ use Doctrine\Common\Util\ClassUtils;
      */
     public function getClassMetadata($className)
     {
-        print_r($this->metadataFactory);die;
         return $this->metadataFactory->getMetadataFor($className);
     }
 

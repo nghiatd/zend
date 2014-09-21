@@ -36,9 +36,10 @@ $connectionOptions = array(
 
 // Get the entity manager.
 $em = \Doctrine\ORM\EntityManager::create($connectionOptions, $config);
+print_r(get_class($em));die;
 
-$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
-    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),
-    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
-));
-return $helperSet;
+//$helperSet = new \Symfony\Component\Console\Helper\HelperSet(array(
+//    'db' => new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($em->getConnection()),
+//    'em' => new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em)
+//));
+//return $helperSet;

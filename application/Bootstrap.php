@@ -65,6 +65,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
      * @return Doctrine_Manager
      */
     public function _initDoctrine() {
+
         require_once('../library/vendor/autoload.php');
         // include and register Doctrine's class loader
         require_once('../library/vendor/doctrine/common/lib/Doctrine/Common/ClassLoader.php');
@@ -79,6 +80,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 
         // create the Doctrine configuration
         $config = new \Doctrine\ORM\Configuration();
+
         // setting the cache ( to ArrayCache. Take a look at
         // the Doctrine manual for different options ! )
         $cache = new \Doctrine\Common\Cache\ArrayCache;
@@ -99,6 +101,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
 //        $config->setAutoGenerateProxyClasses(true);
 //        $config->setProxyNamespace('App\Proxies');
     //old//
+
         $driverImpl = $config->newDefaultAnnotationDriver($entitiesPath);
 
         $config->setMetadataDriverImpl($driverImpl);
@@ -116,9 +119,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
             'dbname'    => $connectionSettings['conn']['dbname'],
             'host'      => $connectionSettings['conn']['host']
         );
-//print_r($config);die;
+
         $entityManager = \Doctrine\ORM\EntityManager::create($conn, $config);
 
+//    require_once '../application/modules/default/models/User.php';
+//        $User = new Model_User();
+//        $User->setName('create from bootstrap');
+//
+//        $entityManager->persist($User);
+//        $entityManager->flush();
+//        echo 'adfasf';die;
         // push the entity manager into our registry for later use
         $registry = Zend_Registry::getInstance();
         $registry->entitymanager = $entityManager;

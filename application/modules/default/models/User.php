@@ -3,8 +3,12 @@
  * @Entity
  * @Table(name="user")
  */
-class User extends Zend_
+class Model_User
 {
+    protected static $doctrine;
+    public function __construct(){
+        self::$doctrine = Zend_Registry::get('entitymanager');
+    }
     /**
      * @Id @Column(type="integer")
      * @GeneratedValue(strategy="AUTO")
@@ -14,8 +18,6 @@ class User extends Zend_
     /** @Column(type="string") */
     private $name;
 
-    /** @Column(type="string") */
-    private $birthday;
 
     public function setName ($name)
     {
@@ -26,5 +28,11 @@ class User extends Zend_
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getById($Id = 0){
+
+        return self::$doctrine->createQuery("SELECT * FROM Model_User WHERE userId = $Id")->execute();
+//        return self::$doctrine->createQuery()->create()->from(__CLASS__)->execute()->getFirst();
     }
 }
